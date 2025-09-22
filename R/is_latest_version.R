@@ -1,7 +1,8 @@
 #' Check the Latest Version of a Synapse ID
 #'
 #' Given a Synapse ID and a file version, this function checks if that version
-#' is the latest version available on Synapse.
+#' is the latest version available on Synapse. This function assumes the user
+#' has already logged in with [synLogin].
 #'
 #' @param syn_id a string specifying the Synapse ID (e.g. "syn123") or the ID
 #'   plus the version number (e.g. "syn123.5"). If the version number is given,
@@ -10,10 +11,6 @@
 #' @param version (optional) If no version is specified in `syn_id`, this should
 #'   be a number or something coercible to a number, specifying the version.
 #'   Default: `NULL`.
-#' @param authToken (optional) A string containing the user's Synapse auth
-#'   token, which is used as the `authToken` argument to [synapser::synLogin].
-#'   If `NULL`, `synLogin` will attempt to read the user's credentials from
-#'   stored configuration. Default: `NULL`.
 #' @param verbose (optional) if `TRUE`, print out whether the given version is
 #'   the latest version or not, before returning. If `FALSE`, nothing is
 #'   printed. Default: `TRUE`.
@@ -27,9 +24,9 @@
 #' is_latest_version("syn123", version = 4)
 #' is_latest_version("syn123.4")
 #' }
-is_latest_version <- function(syn_id, version = NULL, authToken = NULL, verbose = TRUE) {
+is_latest_version <- function(syn_id, version = NULL, verbose = TRUE) {
   # Check that either `syn_id` has the version in it, or `version` is specified,
-  # but if both are specified then the values agree.
+  # or if both are specified then the values agree.
   vals <- stringr::str_split_1(syn_id, pattern = "\\.")
 
   if (length(vals) == 1 && is.null(version)) {
@@ -72,8 +69,6 @@ is_latest_version <- function(syn_id, version = NULL, authToken = NULL, verbose 
   }
 
   version <- as.numeric(version)
-
-  synapser::synLogin(authToken = authToken, silent = TRUE)
 
   syn_file <- synapser::synGet(syn_id, downloadFile = FALSE)
   is_latest <- syn_file$versionNumber == version

@@ -34,7 +34,7 @@ test_that("specifying conflicting versions in `syn_id` and `version` throws an e
                regexp = "Conflicting values given for version")
 })
 
-# TODO any other tests require mocking synLogin and synGet
+# TODO any other tests require mocking synGet
 #test_that("giving a larger version number than what exists on Synapse throws an error", {
 #  expect_error(is_latest_version(??),
 #               regexp = "'??' is not a valid version number")

@@ -4,7 +4,7 @@
 \alias{is_latest_version}
 \title{Check the Latest Version of a Synapse ID}
 \usage{
-is_latest_version(syn_id, version = NULL, authToken = NULL, verbose = TRUE)
+is_latest_version(syn_id, version = NULL, verbose = TRUE)
 }
 \arguments{
 \item{syn_id}{a string specifying the Synapse ID (e.g. "syn123") or the ID
@@ -16,11 +16,6 @@ number.}
 be a number or something coercible to a number, specifying the version.
 Default: \code{NULL}.}
 
-\item{authToken}{(optional) A string containing the user's Synapse auth
-token, which is used as the \code{authToken} argument to \link[synapser:synLogin]{synapser::synLogin}.
-If \code{NULL}, \code{synLogin} will attempt to read the user's credentials from
-stored configuration. Default: \code{NULL}.}
-
 \item{verbose}{(optional) if \code{TRUE}, print out whether the given version is
 the latest version or not, before returning. If \code{FALSE}, nothing is
 printed. Default: \code{TRUE}.}
@@ -31,7 +26,8 @@ version on Synapse, or not.
 }
 \description{
 Given a Synapse ID and a file version, this function checks if that version
-is the latest version available on Synapse.
+is the latest version available on Synapse. This function assumes the user
+has already logged in with \link{synLogin}.
 }
 \examples{
 \dontrun{
