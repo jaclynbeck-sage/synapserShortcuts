@@ -43,9 +43,9 @@ is_latest_version <- function(syn_id, version = NULL, authToken = NULL, verbose 
   } else if (length(vals) == 2 && is.na(suppressWarnings(as.numeric(vals[2])))) {
     # `syn_id` string has a period in it but the version is not a number
     stop(
-      paste(
-        vals[2],
-        "is not a valid Synapse ID / version string. Version must be numeric."
+      stringr::str_glue(
+        "'{vals[2]}' is not a valid Synapse ID / version string. ",
+        "Version must be numeric."
       )
     )
   } else if (!is.null(version) && is.na(suppressWarnings(as.numeric(version)))) {
